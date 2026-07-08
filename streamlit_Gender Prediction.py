@@ -1,53 +1,66 @@
 import streamlit as st
 import nltk
-from nltk import NaiveBayesClassifier
-from nltk.classify import apply_features
 from joblib import load
+from pathlib import Path
 
-# Download NLTK resources if not already downloaded
-nltk.download('names')
+# Download NLTK resources
+nltk.download("names", quiet=True)
 
-# Function to extract features from a name
+# -----------------------------
+# Load Model
+# -----------------------------
+MODEL_PATH = Path(__file__).parent / "gender_prediction.joblib"
+
+try:
+    bayes = load(MODEL_PATH)
+except FileNotFoundError:
+    st.error(f"Model file not found:\n{MODEL_PATH}")
+    st.stop()
+except Exception as e:
+    st.error(f"Error loading model:\n{e}")
+    st.stop()
+
+
+# -----------------------------
+# Feature Extraction
+# -----------------------------
 def extract_gender_features(name):
-    name = name.lower()
-    features = {
+    name = name.lower().strip()
+
+    return {
         "suffix": name[-1:],
-        "suffix2": name[-2:] if len(name) > 1 else name[0],
-        "suffix3": name[-3:] if len(name) > 2 else name[0],
-        "suffix4": name[-4:] if len(name) > 3 else name[0],
-        "suffix5": name[-5:] if len(name) > 4 else name[0],
-        "suffix6": name[-6:] if len(name) > 5 else name[0],
+        "suffix2": name[-2:] if len(name) > 1 else name,
+        "suffix3": name[-3:] if len(name) > 2 else name,
+        "suffix4": name[-4:] if len(name) > 3 else name,
+        "suffix5": name[-5:] if len(name) > 4 else name,
+        "suffix6": name[-6:] if len(name) > 5 else name,
         "prefix": name[:1],
-        "prefix2": name[:2] if len(name) > 1 else name[0],
-        "prefix3": name[:3] if len(name) > 2 else name[0],
-        "prefix4": name[:4] if len(name) > 3 else name[0],
-        "prefix5": name[:5] if len(name) > 4 else name[0]
+        "prefix2": name[:2],
+        "prefix3": name[:3],
+        "prefix4": name[:4],
+        "prefix5": name[:5],
     }
-    return features
 
-# Load the trained Naive Bayes classifier
-bayes = load('gender_prediction.joblib')
 
-# Streamlit app
-def main():
-    st.title('Gender Prediction App')
-    st.write('Enter a name to predict its gender.')
+# -----------------------------
+# Streamlit UI
+# -----------------------------
+st.set_page_config(page_title="Gender Prediction", page_icon="👤")
 
-    # Input for name
-    input_name = st.text_input('Name:')
-    
-    if st.button('Predict'):
-        if input_name.strip() != '':
-            # Extract features for the input name
-            features = extract_gender_features(input_name)
-            
-            # Predict using the trained classifier
-            predicted_gender = bayes.classify(features)
-            
-            # Display prediction
-            st.success(f'The predicted gender for "{input_name}" is: {predicted_gender}')
-        else:
-            st.warning('Please enter a name.')
+st.title("👤 Gender Prediction App")
 
-if __name__ == '__main__':
-    main()
+st.write("Enter a name and click Predict.")
+
+input_name = st.text_input("Name")
+
+if st.button("Predict"):
+
+    if input_name.strip() == "":
+        st.warning("Please enter a name.")
+
+    else:
+        features = extract_gender_features(input_name)
+
+        prediction = bayes.classify(features)
+
+        st.success(f"Prediction: **{prediction.upper()}**")
