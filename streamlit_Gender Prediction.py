@@ -1,15 +1,9 @@
-import streamlit as st
-import nltk
+import os
 from joblib import load
-from pathlib import Path
 
-# Download NLTK resources
-nltk.download("names", quiet=True)
+model_path = os.path.join(os.path.dirname(__file__), "gender_prediction.joblib")
 
-# -----------------------------
-# Load Model
-# -----------------------------
-MODEL_PATH = Path(__file__).parent / "gender_prediction.joblib"
+bayes = load(model_path)
 
 try:
     bayes = load(MODEL_PATH)
