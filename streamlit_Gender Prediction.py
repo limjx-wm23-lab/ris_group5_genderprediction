@@ -143,7 +143,7 @@
 <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/code-view.96e8f14322a045b3.module.css" />
 
 
-  <title>RIS_group5_genderprediction/streamlit_Gender Prediction.py at main · Cheng1604/RIS_group5_genderprediction</title>
+ <title>RIS_group5_genderprediction/streamlit_Gender Prediction.py at main · Cheng1604/RIS_group5_genderprediction</title>
 
 
 
