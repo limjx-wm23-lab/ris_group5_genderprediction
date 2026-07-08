@@ -2,17 +2,16 @@
 <!DOCTYPE html>
 <html
   lang="en"
-  
-  data-color-mode="auto" data-light-theme="light" data-dark-theme="dark"
-  data-a11y-animated-images="system" data-a11y-link-underlines="true"
-  
-  >
+  data-color-mode="auto"
+  data-light-theme="light"
+  data-dark-theme="dark"
+  data-a11y-animated-images="system"
+  data-a11y-link-underlines="true">
 
-    <style>
+<style>
 :root {
-  --fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;
+  --fontStack-monospace: "Monaspace Neon", ui-monospace, ...
 }
-</style>
 
 
 
