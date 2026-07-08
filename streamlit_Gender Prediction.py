@@ -1,17 +1,8 @@
 
-<!DOCTYPE html>
-<html
-  lang="en"
-  data-color-mode="auto"
-  data-light-theme="light"
-  data-dark-theme="dark"
-  data-a11y-animated-images="system"
-  data-a11y-link-underlines="true">
-
-<style>
-:root {
-  --fontStack-monospace: "Monaspace Neon", ui-monospace, ...
-}
+import streamlit as st
+import cv2
+import numpy as np
+from PIL import Image
 
 
 
